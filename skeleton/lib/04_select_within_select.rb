@@ -125,18 +125,18 @@ def sparse_continents
   # Hint: Sometimes rewording the problem can help you see the solution.
   execute(<<-SQL)
 
-  SELECT  
-    x.name, x.continent, x.population
-  FROM  
-    countries AS x
-    WHERE
-    25000000 > ALL (
-      SELECT
-        population
-      FROM 
-        countries AS y
-      WHERE
-        x.continent = y.continent
-    )
+  SELECT
+  name, continent, population
+FROM
+  countries
+WHERE
+continent NOT IN (SELECT 
+DISTINCT continent
+FROM 
+  countries
+WHERE 
+population >= 25000000);
   SQL
 end
+
+
